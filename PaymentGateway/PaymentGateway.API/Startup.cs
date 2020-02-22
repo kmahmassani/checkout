@@ -65,7 +65,7 @@ namespace PaymentGateway.API
                         },
                         TermsOfService = ""
                     });
-                    c.CustomSchemaIds(type => type.FriendlyId(true));
+                    c.CustomSchemaIds(type => type.FriendlyId());                    
                     c.DescribeAllEnumsAsStrings();
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
 

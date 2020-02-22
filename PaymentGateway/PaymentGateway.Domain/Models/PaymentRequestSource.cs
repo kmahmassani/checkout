@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using PaymentGateway.Domain.Annotations;
 
 namespace PaymentGateway.Domain.Models
 {
@@ -14,7 +15,7 @@ namespace PaymentGateway.Domain.Models
         /// The type of payment source. Set this to &#x60;card&#x60;.
         /// </summary>
         /// <value>The type of payment source. Set this to &#x60;card&#x60;.</value>
-        [Required]
+        [Required]       
         [DataMember(Name="type")]
         public string Type { get; set; }
 
@@ -24,6 +25,7 @@ namespace PaymentGateway.Domain.Models
         /// <value>The card number (without separators)</value>
         [Required]
         [DataMember(Name="number")]
+        [CreditCard]
         public string Number { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace PaymentGateway.Domain.Models
         /// </summary>
         /// <value>The expiry year of the card</value>
         [Required]
+        [ExpiryDate]
         [DataMember(Name="expiry_year")]
         public int? ExpiryYear { get; set; }
 
@@ -56,6 +59,7 @@ namespace PaymentGateway.Domain.Models
         /// <value>The card verification value/code. 3 digits, except for Amex (4 digits)</value>
         [DataMember(Name="cvv")]
         [StringLength(4, MinimumLength = 3)]
+        [Required]
         public string Cvv { get; set; }        
     }
 }

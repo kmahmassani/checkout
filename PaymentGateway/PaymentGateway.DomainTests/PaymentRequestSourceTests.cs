@@ -251,7 +251,7 @@ namespace PaymentGateway.DomainTests
 
                 var results = TestModelHelper.Validate(model);
                 Assert.IsTrue(results.Count == (i > 0 && i <= 12 ? 0 : 1));
-            }            
+            }
         }
     }
 }

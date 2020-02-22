@@ -1,3 +1,4 @@
+using PaymentGateway.Domain.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
@@ -13,6 +14,7 @@ namespace PaymentGateway.Domain.Models
         /// Gets or Sets Source
         /// </summary>
         [DataMember(Name="source")]
+        [Required]
         public PaymentRequestSource Source { get; set; }
 
         /// <summary>
@@ -20,8 +22,8 @@ namespace PaymentGateway.Domain.Models
         /// </summary>
         /// <value>The payment amount. The exact format &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/calculating-the-value\&quot; target&#x3D;\&quot;blank\&quot;&gt;depends on the currency&lt;/a&gt;. </value>
         [DataMember(Name="amount")]
-        [Range(0, int.MaxValue)]
-        public decimal Amount { get; set; }
+        [Range(1, int.MaxValue)]
+        public int Amount { get; set; }
 
         /// <summary>
         /// The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; 
@@ -29,6 +31,7 @@ namespace PaymentGateway.Domain.Models
         /// <value>The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; </value>
         [DataMember(Name="currency")]
         [StringLength(3, MinimumLength = 3)]
+        [ISOCurrency]
         public string Currency { get; set; }
 
         /// <summary>

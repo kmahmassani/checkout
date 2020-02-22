@@ -27,6 +27,44 @@ namespace PaymentGateway.Domain.Models
     public partial class PaymentResponseSource : IEquatable<PaymentResponseSource>
     { 
         /// <summary>
+        /// The expiry month
+        /// </summary>
+        /// <value>The expiry month</value>
+        [Required]
+        [DataMember(Name="expiry_month")]
+        public int? ExpiryMonth { get; set; }
+
+        /// <summary>
+        /// The expiry year
+        /// </summary>
+        /// <value>The expiry year</value>
+        [Required]
+        [DataMember(Name="expiry_year")]
+        public int? ExpiryYear { get; set; }
+
+        /// <summary>
+        /// The cardholder&#x27;s name
+        /// </summary>
+        /// <value>The cardholder&#x27;s name</value>
+        [DataMember(Name="name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The card scheme
+        /// </summary>
+        /// <value>The card scheme</value>
+        [DataMember(Name="scheme")]
+        public string Scheme { get; set; }
+
+        /// <summary>
+        /// The last four digits of the card number
+        /// </summary>
+        /// <value>The last four digits of the card number</value>
+        [Required]
+        [DataMember(Name="last4")]
+        public string Last4 { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -34,6 +72,11 @@ namespace PaymentGateway.Domain.Models
         {
             var sb = new StringBuilder();
             sb.Append("class PaymentResponseSource {\n");
+            sb.Append("  ExpiryMonth: ").Append(ExpiryMonth).Append("\n");
+            sb.Append("  ExpiryYear: ").Append(ExpiryYear).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Scheme: ").Append(Scheme).Append("\n");
+            sb.Append("  Last4: ").Append(Last4).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -69,7 +112,32 @@ namespace PaymentGateway.Domain.Models
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return false;
+            return 
+                (
+                    ExpiryMonth == other.ExpiryMonth ||
+                    ExpiryMonth != null &&
+                    ExpiryMonth.Equals(other.ExpiryMonth)
+                ) && 
+                (
+                    ExpiryYear == other.ExpiryYear ||
+                    ExpiryYear != null &&
+                    ExpiryYear.Equals(other.ExpiryYear)
+                ) && 
+                (
+                    Name == other.Name ||
+                    Name != null &&
+                    Name.Equals(other.Name)
+                ) && 
+                (
+                    Scheme == other.Scheme ||
+                    Scheme != null &&
+                    Scheme.Equals(other.Scheme)
+                ) && 
+                (
+                    Last4 == other.Last4 ||
+                    Last4 != null &&
+                    Last4.Equals(other.Last4)
+                );
         }
 
         /// <summary>
@@ -82,6 +150,16 @@ namespace PaymentGateway.Domain.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
+                    if (ExpiryMonth != null)
+                    hashCode = hashCode * 59 + ExpiryMonth.GetHashCode();
+                    if (ExpiryYear != null)
+                    hashCode = hashCode * 59 + ExpiryYear.GetHashCode();
+                    if (Name != null)
+                    hashCode = hashCode * 59 + Name.GetHashCode();
+                    if (Scheme != null)
+                    hashCode = hashCode * 59 + Scheme.GetHashCode();
+                    if (Last4 != null)
+                    hashCode = hashCode * 59 + Last4.GetHashCode();
                 return hashCode;
             }
         }

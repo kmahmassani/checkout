@@ -60,8 +60,8 @@ namespace PaymentGateway.API
                         Description = "Payment Gateway (ASP.NET Core 2.0)",
                         Contact = new Contact()
                         {
-                           Name = "Kamal Mahmassani",
-                           Email = "kmahmassani@gmail.com"
+                            Name = "Kamal Mahmassani",
+                            Email = "kmahmassani@gmail.com"
                         },
                         TermsOfService = ""
                     });
@@ -94,7 +94,7 @@ namespace PaymentGateway.API
                     c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Payment Gateway");
 
                     //TODO: Or alternatively use the original Swagger contract that's included in the static files
-                    // c.SwaggerEndpoint("/swagger-original.json", "Payment Gateway Original");
+                    //c.SwaggerEndpoint("/swagger/v1/openapi.json", "Payment Gateway Original");
                 });
 
             if (env.IsDevelopment())

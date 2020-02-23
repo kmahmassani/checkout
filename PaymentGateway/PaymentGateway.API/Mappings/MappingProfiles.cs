@@ -11,6 +11,11 @@ namespace PaymentGateway.API.Mappings
         {
             CreateMap<Payment, PaymentResponse>();
 
+            CreateMap<PaymentSource, PaymentResponseSource>()
+                .ForMember(x => x.ExpiryMonth, opt => opt.MapFrom(y => y.Expiry_Month))
+                .ForMember(x => x.ExpiryYear, opt => opt.MapFrom(y => y.Expiry_Year));
+                
+
             CreateMap<PaymentRequest, Payment>()
                 .BeforeMap((s,d) => {
                     d.Status = PaymentStatus.Captured;
@@ -18,7 +23,7 @@ namespace PaymentGateway.API.Mappings
                 });                
             
             CreateMap<PaymentRequestSource, PaymentSource>()                
-                .ForMember(x => x.Last4, opt => opt.MapFrom(y => y.Number.Right(4)));                               
+                .ForMember(x => x.Last4, opt => opt.MapFrom(y => y.Number.Right(4)));                             
         }
     }
 }

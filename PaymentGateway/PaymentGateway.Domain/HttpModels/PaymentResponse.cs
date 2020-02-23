@@ -41,26 +41,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <value>Whether or not the authorization or capture was successful</value>
         [Required]
         [DataMember(Name = "approved")]
-        public bool? Approved { get; set; }
-
-        /// <summary>
-        /// The status of the payment
-        /// </summary>
-        /// <value>The status of the payment</value>
-        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public enum StatusEnum
-        {
-            /// <summary>
-            /// Enum AuthorizedEnum for Authorized
-            /// </summary>
-            [EnumMember(Value = "Authorized")]
-            AuthorizedEnum = 0,
-            /// <summary>
-            /// Enum DeclinedEnum for Declined
-            /// </summary>
-            [EnumMember(Value = "Declined")]
-            DeclinedEnum = 1
-        }
+        public bool? Approved { get; set; }  
 
         /// <summary>
         /// The status of the payment
@@ -68,7 +49,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <value>The status of the payment</value>
         [Required]
         [DataMember(Name = "status")]
-        public StatusEnum? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// The acquirer authorization code if the payment was authorized
@@ -97,13 +78,6 @@ namespace PaymentGateway.Domain.HttpModels
         /// </summary>
         /// <value>Your reference for the payment</value>
         [DataMember(Name = "reference")]
-        public string Reference { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Links
-        /// </summary>
-        [Required]
-        [DataMember(Name = "_links")]
-        public PaymentResponseLinks Links { get; set; }        
+        public string Reference { get; set; }        
     }
 }

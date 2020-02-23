@@ -19,13 +19,19 @@ namespace PaymentGateway.DataAccess.Repositories
 
         public async Task<Payment> GetPaymentById(string id)
         {
-            var sql = "SELECT id, amount, currency, approved, payment_status as status, auth_code, processed_on, reference, source_id FROM public.payments WHERE id = @id";
-
+            var paymentSql = "SELECT id, amount, currency, approved, payment_status as status, auth_code, processed_on as ProcessedOn, reference, source_id FROM public.payments WHERE id = @id";
+            var sourceSql = "SELECT id, card_type as type, expiry_month, expiry_year, card_name as name, last4, scheme FROM public.payment_sources WHERE id = @id";
             try
             {
                 _connection.Open();
-                var results = await _connection.QueryAsync<Payment>(sql, new { id = id });
-                return results.FirstOrDefault();
+                var payment = (await _connection.QueryAsync<Payment>(paymentSql, new { id = id })).FirstOrDefault();
+                if (payment != null)
+                {
+                    var source = (await _connection.QueryAsync<PaymentSource>(sourceSql, new { id = payment.Source_Id })).FirstOrDefault();
+                    payment.Source = source;
+                }
+
+                return payment;
             }
             catch (Exception e)
             {

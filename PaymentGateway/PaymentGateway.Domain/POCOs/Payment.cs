@@ -13,6 +13,7 @@ namespace PaymentGateway.Domain.POCOs
         public DateTime? ProcessedOn { get; set; }
         public string Reference { get; set; }
         public PaymentSource Source { get; set; }
+        public string Source_Id { get; set; }
     }
 
     public class PaymentStatus

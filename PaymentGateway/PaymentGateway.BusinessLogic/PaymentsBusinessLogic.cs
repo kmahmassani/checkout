@@ -2,6 +2,7 @@
 using PaymentGateway.Domain.HttpModels;
 using PaymentGateway.Domain.Interfaces;
 using PaymentGateway.Domain.POCOs;
+using System;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.BusinessLogic
@@ -22,9 +23,16 @@ namespace PaymentGateway.BusinessLogic
             if (string.IsNullOrEmpty(id))
                 return null;
 
-            var payment = await _repo.GetPaymentById(id);
+            try
+            {
+                var payment = await _repo.GetPaymentById(id);
 
-            return _mapper.Map<PaymentResponse>(payment);
+                return _mapper.Map<PaymentResponse>(payment);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }            
         }
 
         public async Task<string> CreatePayment(PaymentRequest paymentRequest)

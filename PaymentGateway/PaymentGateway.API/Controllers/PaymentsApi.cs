@@ -41,19 +41,14 @@ namespace PaymentGateway.API.Controllers
         [SwaggerOperation("PaymentsIdGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(PaymentResponse), description: "Payment retrieved successfully")]
         public virtual async Task<IActionResult> PaymentsIdGet([FromHeader][Required()]string authorization, [FromRoute][Required][RegularExpression(@"^(pay|sid)_(\w{26})$")]string id)
-        { 
-            if (authorization.Length < 4) //hacky placeholder
-            {
-                return StatusCode(401);
-            }
-
+        {             
             var payment = await _businessLogic.GetPaymentById(id);
 
             if (payment == null)
             {
                 return StatusCode(404);
-            }
-           
+            }                      
+
             return new ObjectResult(payment);
         }
 

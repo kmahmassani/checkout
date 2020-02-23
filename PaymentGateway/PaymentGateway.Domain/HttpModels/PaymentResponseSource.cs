@@ -13,7 +13,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The expiry month
         /// </summary>
-        /// <value>The expiry month</value>
+        /// <value>12</value>
         [Required]
         [DataMember(Name="expiry_month")]
         public int? ExpiryMonth { get; set; }
@@ -21,7 +21,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The expiry year
         /// </summary>
-        /// <value>The expiry year</value>
+        /// <value>2021</value>
         [Required]
         [DataMember(Name="expiry_year")]
         public int? ExpiryYear { get; set; }
@@ -29,21 +29,21 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The cardholder&#x27;s name
         /// </summary>
-        /// <value>The cardholder&#x27;s name</value>
+        /// <value>John Wick</value>
         [DataMember(Name="name")]
         public string Name { get; set; }
 
         /// <summary>
         /// The card scheme
         /// </summary>
-        /// <value>The card scheme</value>
+        /// <value>Visa</value>
         [DataMember(Name="scheme")]
         public string Scheme { get; set; }
 
         /// <summary>
         /// The last four digits of the card number
         /// </summary>
-        /// <value>The last four digits of the card number</value>
+        /// <value>1111</value>
         [Required]
         [DataMember(Name="last4")]
         public string Last4 { get; set; }        

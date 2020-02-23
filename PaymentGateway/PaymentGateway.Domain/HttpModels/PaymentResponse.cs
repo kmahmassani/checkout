@@ -14,7 +14,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The payment&#x27;s unique identifier
         /// </summary>
-        /// <value>The payment&#x27;s unique identifier</value>
+        /// <value>pay_wqo7wb92SLE9irZXpVsvF1U020</value>
         [Required]
         [DataMember(Name = "id")]
         public string Id { get; set; }
@@ -22,7 +22,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The payment amount. The exact format &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/calculating-the-value\&quot; target&#x3D;\&quot;blank\&quot;&gt;depends on the currency&lt;/a&gt;. 
         /// </summary>
-        /// <value>The payment amount. The exact format &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/calculating-the-value\&quot; target&#x3D;\&quot;blank\&quot;&gt;depends on the currency&lt;/a&gt;. </value>
+        /// <value>120000</value>
         [Required]
         [DataMember(Name = "amount")]
         public int? Amount { get; set; }
@@ -30,7 +30,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; of the payment
         /// </summary>
-        /// <value>The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; of the payment</value>
+        /// <value>USD</value>
         [Required]
         [DataMember(Name = "currency")]
         public string Currency { get; set; }
@@ -38,7 +38,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// Whether or not the authorization or capture was successful
         /// </summary>
-        /// <value>Whether or not the authorization or capture was successful</value>
+        /// <value>true</value>
         [Required]
         [DataMember(Name = "approved")]
         public bool? Approved { get; set; }  
@@ -46,7 +46,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The status of the payment
         /// </summary>
-        /// <value>The status of the payment</value>
+        /// <value>Authorized</value>
         [Required]
         [DataMember(Name = "status")]
         public string Status { get; set; }
@@ -54,7 +54,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The acquirer authorization code if the payment was authorized
         /// </summary>
-        /// <value>The acquirer authorization code if the payment was authorized</value>
+        /// <value>666</value>
         [DataMember(Name = "auth_code")]
         public string AuthCode { get; set; }
 
@@ -68,7 +68,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The date/time the payment was processed
         /// </summary>
-        /// <value>The date/time the payment was processed</value>
+        /// <value>2020-02-23 15:26:18.619267</value>
         [Required]
         [DataMember(Name = "processed_on")]
         public DateTime ProcessedOn { get; set; }
@@ -76,7 +76,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// Your reference for the payment
         /// </summary>
-        /// <value>Your reference for the payment</value>
+        /// <value>Mustang Payment</value>
         [DataMember(Name = "reference")]
         public string Reference { get; set; }        
     }

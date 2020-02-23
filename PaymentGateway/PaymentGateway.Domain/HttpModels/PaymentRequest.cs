@@ -20,7 +20,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The payment amount. The exact format &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/calculating-the-value\&quot; target&#x3D;\&quot;blank\&quot;&gt;depends on the currency&lt;/a&gt;. 
         /// </summary>
-        /// <value>The payment amount. The exact format &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/calculating-the-value\&quot; target&#x3D;\&quot;blank\&quot;&gt;depends on the currency&lt;/a&gt;. </value>
+        /// <value>120000</value>
         [DataMember(Name="amount")]
         [Range(1, int.MaxValue)]
         public int Amount { get; set; }
@@ -28,7 +28,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; 
         /// </summary>
-        /// <value>The three-letter &lt;a href&#x3D;\&quot;https://docs.checkout.com/docs/currency-codes\&quot; target&#x3D;\&quot;blank\&quot;&gt;ISO currency code&lt;/a&gt; </value>
+        /// <value>USD</value>
         [DataMember(Name="currency")]
         [StringLength(3, MinimumLength = 3)]
         [ISOCurrency]
@@ -37,7 +37,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// A reference you can later use to identify this payment, such as an order number.
         /// </summary>
-        /// <value>A reference you can later use to identify this payment, such as an order number.</value>
+        /// <value>Mustang Payment</value>
         [DataMember(Name="reference")]
         public string Reference { get; set; }        
     }

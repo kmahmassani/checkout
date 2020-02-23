@@ -91,8 +91,7 @@ namespace PaymentGateway.API
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
-            services.AddTransient<IDbConnection>(db => new NpgsqlConnection(Configuration.GetConnectionString("PaymentsDB")));
-            //services.AddTransient<IContextManager, ContextManager>();
+            services.AddTransient<IDbConnection>(db => new NpgsqlConnection(Configuration.GetConnectionString("PaymentsDB")));            
             services.AddTransient<IPaymentsRepository, PaymentsRepository>();
             services.AddTransient<IPaymentsBusinessLogic, PaymentsBusinessLogic>();
         }
@@ -111,12 +110,8 @@ namespace PaymentGateway.API
                 .UseStaticFiles()
                 .UseSwagger()
                 .UseSwaggerUI(c =>
-                {
-                    //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+                { 
                     c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Payment Gateway");
-
-                    //TODO: Or alternatively use the original Swagger contract that's included in the static files
-                    //c.SwaggerEndpoint("/swagger/v1/openapi.json", "Payment Gateway Original");
                 });
 
             if (env.IsDevelopment())

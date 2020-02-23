@@ -9,12 +9,14 @@ namespace PaymentGateway.BusinessLogic
 {
     public class PaymentsBusinessLogic : IPaymentsBusinessLogic
     {
-        private readonly IPaymentsRepository _repo;
+        private readonly IPaymentsRepository _paymentsRepo;
+        private readonly IBank _bankRepo;
         private readonly IMapper _mapper;
 
-        public PaymentsBusinessLogic(IPaymentsRepository repo, IMapper mapper)
+        public PaymentsBusinessLogic(IPaymentsRepository paymentsRepo, IBank bankRepo, IMapper mapper)
         {
-            _repo = repo;
+            _paymentsRepo = paymentsRepo;
+            _bankRepo = bankRepo;
             _mapper = mapper;
         }
 
@@ -25,7 +27,7 @@ namespace PaymentGateway.BusinessLogic
 
             try
             {
-                var payment = await _repo.GetPaymentById(id);
+                var payment = await _paymentsRepo.GetPaymentById(id);
 
                 return _mapper.Map<PaymentResponse>(payment);
             }
@@ -44,7 +46,7 @@ namespace PaymentGateway.BusinessLogic
 
 
 
-            return await _repo.CreatePayment(payment);
+            return await _paymentsRepo.CreatePayment(payment);
         }
     }
 }

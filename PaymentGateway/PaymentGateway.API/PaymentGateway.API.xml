@@ -20,7 +20,7 @@
             <response code="401">Unauthorized</response>
             <response code="404">Payment not found</response>
         </member>
-        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsPost(System.String,System.String,PaymentGateway.Domain.Models.PaymentRequest)">
+        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsPost(System.String,System.String,PaymentGateway.Domain.HttpModels.PaymentRequest)">
             <summary>
             Request a payment
             </summary>
@@ -59,7 +59,7 @@
             <param name="operation">Operation</param>
             <param name="context">OperationFilterContext</param>
         </member>
-        <member name="M:PaymentGateway.API.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:PaymentGateway.API.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
             <summary>
             Constructor
             </summary>

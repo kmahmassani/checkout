@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PaymentGateway.Domain.Models;
+using PaymentGateway.Domain.HttpModels;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PaymentGateway.DomainTests
 {

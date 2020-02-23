@@ -3,7 +3,11 @@ using Swashbuckle.AspNetCore.Annotations;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using PaymentGateway.API.Attributes;
-using PaymentGateway.Domain.Models;
+using PaymentGateway.Domain.HttpModels;
+using PaymentGateway.Domain.Interfaces;
+using System.Threading.Tasks;
+using AutoMapper;
+using PaymentGateway.Domain.POCOs;
 
 namespace PaymentGateway.API.Controllers
 {
@@ -12,7 +16,16 @@ namespace PaymentGateway.API.Controllers
     /// </summary>
     [ApiController]
     public class PaymentsApiController : ControllerBase
-    { 
+    {
+        private readonly IPaymentsBusinessLogic _businessLogic;       
+
+        public PaymentsApiController(IPaymentsBusinessLogic businessLogic)
+        {
+            _businessLogic = businessLogic;
+        }            
+
+
+
         /// <summary>
         /// Get payment details
         /// </summary>
@@ -27,23 +40,21 @@ namespace PaymentGateway.API.Controllers
         [ValidateModelState]
         [SwaggerOperation("PaymentsIdGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(PaymentResponse), description: "Payment retrieved successfully")]
-        public virtual IActionResult PaymentsIdGet([FromHeader][Required()]string authorization, [FromRoute][Required][RegularExpression("/^(pay|sid)_(\\w{26})$/")]string id)
+        public virtual async Task<IActionResult> PaymentsIdGet([FromHeader][Required()]string authorization, [FromRoute][Required][RegularExpression(@"^(pay|sid)_(\w{26})$")]string id)
         { 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(PaymentResponse));
+            if (authorization.Length < 4) //hacky placeholder
+            {
+                return StatusCode(401);
+            }
 
-            //TODO: Uncomment the next line to return response 401 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(401);
+            var payment = await _businessLogic.GetPaymentById(id);
 
-            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(404);
-            //string exampleJson = null;
-            //exampleJson = "{\n  \"reference\" : \"ORD-5023-4E89\",\n  \"amount\" : 6540,\n  \"approved\" : true,\n  \"_links\" : \"{\\"self\\":{\\"href\\":\\"https://api.checkout.com/payments/pay_y3oqhf46pyzuxjbcn2giaqnb44\\"}}\",\n  \"currency\" : \"USD\",\n  \"id\" : \"\",\n  \"source\" : \"\",\n  \"processed_on\" : \"\",\n  \"status\" : \"Authorized\",\n  \"auth_code\" : \"643381\"\n}";
-            
-            //            var example = exampleJson != null
-            //            ? JsonConvert.DeserializeObject<PaymentResponse>(exampleJson)
-            //            : default(PaymentResponse);            //TODO: Change the data returned
-            return new ObjectResult("");
+            if (payment == null)
+            {
+                return StatusCode(404);
+            }
+           
+            return new ObjectResult(payment);
         }
 
         /// <summary>
@@ -63,25 +74,10 @@ namespace PaymentGateway.API.Controllers
         [SwaggerOperation("PaymentsPost")]
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
         [SwaggerResponse(statusCode: 422, type: typeof(ValidationError), description: "Invalid data was sent")]
-        public virtual IActionResult PaymentsPost([FromHeader][Required()]string authorization, [FromHeader][Required()]string contentType, [FromBody]PaymentRequest body)
-        { 
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201, default(PaymentResponse));
+        public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromHeader][Required()]string contentType, [FromBody]PaymentRequest body)
+        {             
+            var id = await _businessLogic.CreatePayment(body);
 
-            //TODO: Uncomment the next line to return response 401 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(401);
-
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422, default(ValidationError));
-
-            //TODO: Uncomment the next line to return response 502 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(502);
-            string exampleJson = null;
-            //exampleJson = "{\n  \"reference\" : \"ORD-5023-4E89\",\n  \"amount\" : 6540,\n  \"approved\" : true,\n  \"_links\" : \"{\\"self\\":{\\"href\\":\\"https://api.checkout.com/payments/pay_y3oqhf46pyzuxjbcn2giaqnb44\\"}}\",\n  \"currency\" : \"USD\",\n  \"id\" : \"\",\n  \"source\" : \"\",\n  \"processed_on\" : \"\",\n  \"status\" : \"Authorized\",\n  \"auth_code\" : \"643381\"\n}";
-            
-            //            var example = exampleJson != null
-            //            ? JsonConvert.DeserializeObject<PaymentResponse>(exampleJson)
-            //            : default(PaymentResponse);            //TODO: Change the data returned
             return new ObjectResult("");
         }
     }

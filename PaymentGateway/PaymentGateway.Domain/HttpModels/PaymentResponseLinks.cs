@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace PaymentGateway.Domain.Models
+namespace PaymentGateway.Domain.HttpModels
 {
     /// <summary>
     /// The links related to the payment

@@ -1,0 +1,7 @@
+FROM postgres:11.5-alpine
+
+COPY *.sql /docker-entrypoint-initdb.d/
+
+ENV PGDATA=/data
+ENV POSTGRES_DB='PaymentInfo'
+ENV POSTGRES_PASSWORD='postgres'

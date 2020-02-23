@@ -2,7 +2,7 @@ using PaymentGateway.Domain.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace PaymentGateway.Domain.Models
+namespace PaymentGateway.Domain.HttpModels
 {
     /// <summary>
     /// 

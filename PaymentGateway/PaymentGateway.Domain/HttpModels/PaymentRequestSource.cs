@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using PaymentGateway.Domain.Annotations;
 
-namespace PaymentGateway.Domain.Models
+namespace PaymentGateway.Domain.HttpModels
 {
     /// <summary>
     /// A card payment source

@@ -10,7 +10,14 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using PaymentGateway.API.Filters;
-
+using PaymentGateway.Domain.Interfaces;
+using System.Data;
+using Npgsql;
+using PaymentGateway.DataAccess;
+using PaymentGateway.DataAccess.Repositories;
+using PaymentGateway.BusinessLogic;
+using AutoMapper;
+using PaymentGateway.API.Mappings;
 
 namespace PaymentGateway.API
 {
@@ -25,10 +32,18 @@ namespace PaymentGateway.API
         /// </summary>
         /// <param name="env"></param>
         /// <param name="configuration"></param>
-        public Startup(IHostingEnvironment env, IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
             _hostingEnv = env;
-            Configuration = configuration;
+
+           var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            builder.AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         /// <summary>
@@ -73,6 +88,13 @@ namespace PaymentGateway.API
                     // Use [ValidateModelState] on Actions to actually validate it in C# as well!
                     c.OperationFilter<GeneratePathParamsValidationFilter>();
                 });
+
+            services.AddAutoMapper(typeof(MappingProfiles));
+
+            services.AddTransient<IDbConnection>(db => new NpgsqlConnection(Configuration.GetConnectionString("PaymentsDB")));
+            //services.AddTransient<IContextManager, ContextManager>();
+            services.AddTransient<IPaymentsRepository, PaymentsRepository>();
+            services.AddTransient<IPaymentsBusinessLogic, PaymentsBusinessLogic>();
         }
 
         /// <summary>

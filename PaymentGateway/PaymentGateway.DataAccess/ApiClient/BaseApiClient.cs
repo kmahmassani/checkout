@@ -29,6 +29,14 @@ namespace PaymentGateway.DataAccess.ApiClient
             return obj;
         }
 
+        /// <summary>
+        /// Posts request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="uri"></param>
+        /// <exception cref="HttpRequestException">Thrown when remote server cannot be reached</exception>
+        /// <returns>T</returns>
         public async Task<T> PostAsync<T>(object data, string uri)
         {
             var content = JsonConvert.SerializeObject(data);

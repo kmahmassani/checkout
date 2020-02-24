@@ -42,5 +42,10 @@ namespace BankAPI.Models
         [DataMember(Name="authcode")]
         public string AuthCode { get; set; } 
 
+        /// <summary>
+        /// Banks Response Code of transaction
+        /// </summary>    
+        [JsonProperty(PropertyName = "response_code")]
+        public string ResponseCode { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace PaymentGateway.Domain.Interfaces
     {
         Task<Payment> GetPaymentById(string id);
         Task<Payment> CreatePayment(Payment payment);
-        Task<Payment> UpdatePaymentStatus(string paymentId, bool approved, string authCode, string status);
+        Task<Payment> UpdatePaymentStatus(string paymentId, bool approved, string authCode, string status, string resp_code);
     }
 }

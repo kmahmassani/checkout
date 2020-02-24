@@ -59,6 +59,13 @@ namespace PaymentGateway.Domain.HttpModels
         public string AuthCode { get; set; }
 
         /// <summary>
+        /// The acquirer authorization code if the payment was authorized
+        /// </summary>
+        /// <value>666</value>
+        [DataMember(Name = "response_code")]
+        public string ResponseCode { get; set; }
+
+        /// <summary>
         /// The source of the payment
         /// </summary>
         /// <value>The source of the payment</value>

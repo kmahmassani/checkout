@@ -14,6 +14,7 @@ namespace PaymentGateway.Domain.POCOs
         public string Reference { get; set; }
         public PaymentSource Source { get; set; }
         public string Source_Id { get; set; }
+        public string ResponseCode { get; set; }
     }
 
     public class PaymentStatus
@@ -23,6 +24,7 @@ namespace PaymentGateway.Domain.POCOs
 
         public static string Captured   { get { return "Captured"; } }
         public static string Authorized   { get { return "Authorized"; } }
-        public static string Declined   { get { return "Declined"; } }        
+        public static string Declined   { get { return "Declined"; } }
+        public static string Failed { get { return "Failed"; } }
     }
 }

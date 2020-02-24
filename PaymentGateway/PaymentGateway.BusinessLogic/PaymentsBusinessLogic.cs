@@ -3,6 +3,7 @@ using PaymentGateway.Domain.HttpModels;
 using PaymentGateway.Domain.Interfaces;
 using PaymentGateway.Domain.POCOs;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.BusinessLogic
@@ -49,16 +50,27 @@ namespace PaymentGateway.BusinessLogic
             payment = await _paymentsRepo.CreatePayment(payment);
 
             var bankRequest = _mapper.Map<BankPaymentRequest>(paymentRequest);
-            var bankResponse = await _bankRepo.ProcessCardPost(bankRequest);
 
-            if (bankResponse != null)
+            try
             {
-                payment.Approved = bankResponse.Approved;
-                payment.AuthCode = bankResponse.AuthCode;
-                payment.Status = bankResponse.Approved ? PaymentStatus.Authorized : PaymentStatus.Declined;
-            }
+                var bankResponse = await _bankRepo.ProcessCardPost(bankRequest);
 
-            payment = await _paymentsRepo.UpdatePaymentStatus(payment.Id, payment.Approved, payment.AuthCode, payment.Status);
+                if (bankResponse != null)
+                {
+                    payment.Approved = bankResponse.Approved;
+                    payment.AuthCode = bankResponse.AuthCode;
+                    payment.Status = bankResponse.Approved ? PaymentStatus.Authorized : PaymentStatus.Declined;
+                    payment.ResponseCode = bankResponse.ResponseCode;
+                }
+
+                payment = await _paymentsRepo.UpdatePaymentStatus(payment.Id, payment.Approved, payment.AuthCode, payment.Status, payment.ResponseCode);
+            }
+            catch (HttpRequestException e)
+            {
+                payment.Approved = false;
+                payment.Status = PaymentStatus.Failed;
+                payment = await _paymentsRepo.UpdatePaymentStatus(payment.Id, payment.Approved, payment.AuthCode, payment.Status, null);
+            }
 
             var response = _mapper.Map<PaymentResponse>(payment);
 

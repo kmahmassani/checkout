@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PaymentGateway.Domain.HttpModels
 {
@@ -24,5 +21,11 @@ namespace PaymentGateway.Domain.HttpModels
         /// </summary>    
         [JsonProperty(PropertyName = "authcode")]
         public string AuthCode { get; set; }
+
+        /// <summary>
+        /// Banks Response Code of transaction
+        /// </summary>    
+        [JsonProperty(PropertyName = "response_code")]
+        public string ResponseCode { get; set; }
     }
 }

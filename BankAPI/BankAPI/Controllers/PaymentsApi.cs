@@ -43,12 +43,14 @@ namespace BankAPI.Controllers
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
         public virtual IActionResult ProcessCardPost([FromBody]PaymentRequest body)
         { 
+            var approved = int.Parse(body.Number.Substring(0,1)) % 2 == 0;
             // Approval or rejection will be based on the first digit of the card number
             var retval = new PaymentResponse()
             {
                 Id = Guid.NewGuid().ToString(),
-                Approved = int.Parse(body.Number.Substring(0,1)) % 2 == 0,
-                AuthCode = body.Number.Substring(3,4)
+                Approved = approved,
+                AuthCode = body.Number.Substring(3,4),
+                ResponseCode = approved ? "10000" : "30033"
             };
 
             return new ObjectResult(retval);

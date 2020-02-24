@@ -3,23 +3,23 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://*:3000",
+      "applicationUrl": "http://*:80",
       "sslPort": 0
     }
   },
   "profiles": {
+    "BankAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger/",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "web": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "http://*:3000/swagger/",
+      "launchUrl": "http://*:80/swagger/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

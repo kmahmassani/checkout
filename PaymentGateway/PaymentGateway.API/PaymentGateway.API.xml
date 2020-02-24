@@ -20,7 +20,7 @@
             <response code="401">Unauthorized</response>
             <response code="404">Payment not found</response>
         </member>
-        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsPost(System.String,System.String,PaymentGateway.Domain.HttpModels.PaymentRequest)">
+        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsPost(System.String,PaymentGateway.Domain.HttpModels.PaymentRequest)">
             <summary>
             Request a payment
             </summary>

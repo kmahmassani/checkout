@@ -23,7 +23,14 @@ namespace PaymentGateway.API.Mappings
                 });                
             
             CreateMap<PaymentRequestSource, PaymentSource>()                
-                .ForMember(x => x.Last4, opt => opt.MapFrom(y => y.Number.Right(4)));                             
+                .ForMember(x => x.Last4, opt => opt.MapFrom(y => y.Number.Right(4)));      
+            
+            CreateMap<PaymentRequest, BankPaymentRequest>()
+                .ForMember(d => d.Cvv, opt => opt.MapFrom(s => s.Source.Cvv))
+                .ForMember(d => d.ExpiryMonth, opt => opt.MapFrom(s => s.Source.ExpiryMonth))
+                .ForMember(d => d.ExpiryYear, opt => opt.MapFrom(s => s.Source.ExpiryYear))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Source.Name))
+                .ForMember(d => d.Number, opt => opt.MapFrom(s => s.Source.Number));                
         }
     }
 }

@@ -40,6 +40,8 @@ namespace PaymentGateway.API.Controllers
         [ValidateModelState]
         [SwaggerOperation("PaymentsIdGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(PaymentResponse), description: "Payment retrieved successfully")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public virtual async Task<IActionResult> PaymentsIdGet([FromHeader][Required()]string authorization, [FromRoute][Required][RegularExpression(@"^(pay|sid)_(\w{26})$")]string id)
         {             
             var payment = await _businessLogic.GetPaymentById(id);
@@ -69,11 +71,16 @@ namespace PaymentGateway.API.Controllers
         [SwaggerOperation("PaymentsPost")]
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
         [SwaggerResponse(statusCode: 422, type: typeof(ValidationError), description: "Invalid data was sent")]
-        public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromHeader][Required()]string contentType, [FromBody]PaymentRequest body)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromBody]PaymentRequest body)
         {             
-            var id = await _businessLogic.CreatePayment(body);
+            var payment = await _businessLogic.CreatePayment(body);
 
-            return new ObjectResult("");
+            var response = new ObjectResult(payment);
+            response.StatusCode = 201;
+            
+            return response;
         }
     }
 }

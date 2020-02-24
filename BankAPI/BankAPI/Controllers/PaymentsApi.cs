@@ -43,24 +43,15 @@ namespace BankAPI.Controllers
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
         public virtual IActionResult ProcessCardPost([FromBody]PaymentRequest body)
         { 
-            //TODO: Uncomment the next line to return response 201 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(201, default(PaymentResponse));
+            // Approval or rejection will be based on the first digit of the card number
+            var retval = new PaymentResponse()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Approved = int.Parse(body.Number.Substring(0,1)) % 2 == 0,
+                AuthCode = body.Number.Substring(3,4)
+            };
 
-            //TODO: Uncomment the next line to return response 401 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(401);
-
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422);
-
-            //TODO: Uncomment the next line to return response 502 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(502);
-            string exampleJson = null;
-            exampleJson = "{\n  \"approved\" : true,\n  \"id\" : \"id\"\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<PaymentResponse>(exampleJson)
-                        : default(PaymentResponse);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return new ObjectResult(retval);
         }
     }
 }

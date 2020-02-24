@@ -74,8 +74,7 @@ namespace BankAPI
                         Description = "Bank API Mock (ASP.NET Core 2.0)",
                         Contact = new Contact()
                         {
-                           Name = "Kamal Mahmassani",
-                           Url = "https://github.com/swagger-api/swagger-codegen",
+                           Name = "Kamal Mahmassani",                          
                            Email = "kmahmassani@gmail.com"
                         },
                         TermsOfService = ""
@@ -104,12 +103,8 @@ namespace BankAPI
                 .UseStaticFiles()
                 .UseSwagger()
                 .UseSwaggerUI(c =>
-                {
-                    //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
-                    c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Bank API Mock");
-
-                    //TODO: Or alternatively use the original Swagger contract that's included in the static files
-                    // c.SwaggerEndpoint("/swagger-original.json", "Bank API Mock Original");
+                {                    
+                    c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Bank API Mock");                    
                 });
 
             if (env.IsDevelopment())

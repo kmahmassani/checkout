@@ -37,16 +37,32 @@ namespace PaymentGateway.BusinessLogic
             }            
         }
 
-        public async Task<string> CreatePayment(PaymentRequest paymentRequest)
+        public async Task<PaymentResponse> CreatePayment(PaymentRequest paymentRequest)
         {
             if (paymentRequest == null)
                 return null;
 
             var payment = _mapper.Map<Payment>(paymentRequest);
 
+            payment.Status = PaymentStatus.Captured;
 
+            payment = await _paymentsRepo.CreatePayment(payment);
 
-            return await _paymentsRepo.CreatePayment(payment);
+            var bankRequest = _mapper.Map<BankPaymentRequest>(paymentRequest);
+            var bankResponse = await _bankRepo.ProcessCardPost(bankRequest);
+
+            if (bankResponse != null)
+            {
+                payment.Approved = bankResponse.Approved;
+                payment.AuthCode = bankResponse.AuthCode;
+                payment.Status = bankResponse.Approved ? PaymentStatus.Authorized : PaymentStatus.Declined;
+            }
+
+            payment = await _paymentsRepo.UpdatePaymentStatus(payment.Id, payment.Approved, payment.AuthCode, payment.Status);
+
+            var response = _mapper.Map<PaymentResponse>(payment);
+
+            return response;
         }
     }
 }

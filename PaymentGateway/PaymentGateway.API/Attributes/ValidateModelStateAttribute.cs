@@ -28,7 +28,7 @@ namespace PaymentGateway.API.Attributes
 
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(context.ModelState);
+                context.Result = new ObjectResult(context.ModelState) { StatusCode = 422 };                    
             }
         }
 

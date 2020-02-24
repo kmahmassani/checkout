@@ -18,5 +18,11 @@ namespace PaymentGateway.Domain.HttpModels
         /// </summary>            
         [JsonProperty(PropertyName = "approved")]
         public bool Approved { get; set; }
+        
+        /// <summary>
+        /// Banks AuthCode of transaction
+        /// </summary>    
+        [JsonProperty(PropertyName = "authcode")]
+        public string AuthCode { get; set; }
     }
 }

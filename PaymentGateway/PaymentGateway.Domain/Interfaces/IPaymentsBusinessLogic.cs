@@ -6,6 +6,6 @@ namespace PaymentGateway.Domain.Interfaces
     public interface IPaymentsBusinessLogic
     {
         Task<PaymentResponse> GetPaymentById(string id);
-        Task<string> CreatePayment(PaymentRequest payment);
+        Task<PaymentResponse> CreatePayment(PaymentRequest payment);
     }
 }

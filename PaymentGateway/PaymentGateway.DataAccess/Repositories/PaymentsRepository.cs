@@ -20,14 +20,14 @@ namespace PaymentGateway.DataAccess.Repositories
         public async Task<Payment> GetPaymentById(string id)
         {
             var paymentSql = "SELECT id, amount, currency, approved, payment_status as status, auth_code, processed_on as ProcessedOn, reference, source_id FROM public.payments WHERE id = @id";
-            var sourceSql = "SELECT id, card_type as type, expiry_month, expiry_year, card_name as name, last4, scheme FROM public.payment_sources WHERE id = @id";
+           
             try
             {
                 _connection.Open();
                 var payment = (await _connection.QueryAsync<Payment>(paymentSql, new { id = id })).FirstOrDefault();
                 if (payment != null)
                 {
-                    var source = (await _connection.QueryAsync<PaymentSource>(sourceSql, new { id = payment.Source_Id })).FirstOrDefault();
+                    var source = await GetPaymentSourceAsync(payment.Source_Id);
                     payment.Source = source;
                 }
 
@@ -37,19 +37,29 @@ namespace PaymentGateway.DataAccess.Repositories
             {
                 return null;
             }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
-        public async Task<string> CreatePayment(Payment payment)
+
+        public async Task<Payment> CreatePayment(Payment payment)
         {
-            var sourceSql = "INSERT INTO public.payment_sources (card_type, expiry_month, expiry_year, card_name, last4, scheme) VALUES (@type, @expiry_Month, @expiry_Year, @name, @last4, @scheme) RETURNING id;";
-            var paymentSql = "INSERT INTO public.payments (amount, currency, approved, payment_status, auth_code, reference, source_id) VALUES (@amount, @currency, @approved, @status, @auth_code, @reference, @source_id) RETURNING id;";
+            var sourceSql = "INSERT INTO public.payment_sources (card_type, expiry_month, expiry_year, card_name, last4, scheme) " +
+                            "VALUES (@type, @expiry_Month, @expiry_Year, @name, @last4, @scheme) " +
+                            "RETURNING id, card_type as type, expiry_month, expiry_year, card_name as name, last4, scheme;";
+
+            var paymentSql = "INSERT INTO public.payments (amount, currency, approved, payment_status, auth_code, reference, source_id) " +
+                                "VALUES (@amount, @currency, @approved, @status, @auth_code, @reference, @source_id) " +
+                                "RETURNING id, amount, currency, approved, payment_status as status, auth_code, processed_on as ProcessedOn, reference, source_id;";
 
             try
             {
                 _connection.Open();
                 using (var transaction = _connection.BeginTransaction())
                 {
-                    var sourceId = (await _connection.QueryAsync<string>(sourceSql,
+                    var source = (await _connection.QueryAsync<PaymentSource>(sourceSql,
                         new
                         {
                             type = payment.Source.Type,
@@ -60,7 +70,7 @@ namespace PaymentGateway.DataAccess.Repositories
                             scheme = payment.Source.Scheme
                         })).FirstOrDefault();
 
-                    var paymentId = (await _connection.QueryAsync<string>(paymentSql,
+                    var savedPayment = (await _connection.QueryAsync<Payment>(paymentSql,
                         new
                         {
                             amount = payment.Amount,
@@ -69,13 +79,13 @@ namespace PaymentGateway.DataAccess.Repositories
                             status = payment.Status,
                             auth_code = payment.AuthCode,
                             reference = payment.Reference,
-                            source_id = sourceId
+                            source_id = source.Id
                         })).FirstOrDefault();
 
 
                     transaction.Commit();
 
-                    return paymentId;
+                    return savedPayment;
                 }
 
             }
@@ -83,7 +93,64 @@ namespace PaymentGateway.DataAccess.Repositories
             {
                 return null;
             }
+            finally
+            {
+                _connection.Close();
+            }
 
+        }
+
+        public async Task<Payment> UpdatePaymentStatus(string paymentId, bool approved, string authCode, string status)
+        {
+            var sql = "UPDATE public.payments SET approved=@approved, payment_status=@status, auth_code=@authCode WHERE id = @id" +
+                "RETURNING id, amount, currency, approved, payment_status as status, auth_code, processed_on as ProcessedOn, reference, source_id;";
+
+            try
+            {
+                _connection.Open();
+                var savedPayment = (await _connection.QueryAsync<Payment>(sql,
+                        new
+                        {
+                            id = paymentId,
+                            approved = approved,
+                            authCode = authCode,
+                            status = status
+                        })).FirstOrDefault();
+
+                savedPayment.Source = await GetPaymentSourceAsync(savedPayment.Source_Id);
+
+                return savedPayment;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            
+        }
+
+        private async Task<PaymentSource> GetPaymentSourceAsync(string sourceId)
+        {
+            var sourceSql = "SELECT id, card_type as type, expiry_month, expiry_year, card_name as name, last4, scheme FROM public.payment_sources WHERE id = @id";
+            try
+            {
+                _connection.Open();         
+                
+                var source = (await _connection.QueryAsync<PaymentSource>(sourceSql, new { id = sourceId })).FirstOrDefault();
+                   
+                return source;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
     }
 }

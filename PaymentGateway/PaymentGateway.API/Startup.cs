@@ -18,6 +18,7 @@ using PaymentGateway.DataAccess.Repositories;
 using PaymentGateway.BusinessLogic;
 using AutoMapper;
 using PaymentGateway.API.Mappings;
+using PaymentGateway.DataAccess.ApiClient;
 
 namespace PaymentGateway.API
 {
@@ -93,7 +94,8 @@ namespace PaymentGateway.API
 
             services.AddTransient<IDbConnection>(db => new NpgsqlConnection(Configuration.GetConnectionString("PaymentsDB")));            
             services.AddTransient<IPaymentsRepository, PaymentsRepository>();
-            services.AddTransient<IPaymentsBusinessLogic, PaymentsBusinessLogic>();
+            services.AddTransient<IPaymentsBusinessLogic, PaymentsBusinessLogic>();            
+            services.AddTransient<IBank>(x => new BankRepository(new BaseApiClient(new System.Net.Http.HttpClient(), Configuration.GetConnectionString("BankUrl"))));
         }
 
         /// <summary>

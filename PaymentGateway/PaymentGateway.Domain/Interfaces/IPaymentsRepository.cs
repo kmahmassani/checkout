@@ -6,6 +6,7 @@ namespace PaymentGateway.Domain.Interfaces
     public interface IPaymentsRepository
     {
         Task<Payment> GetPaymentById(string id);
-        Task<string> CreatePayment(Payment payment);
+        Task<Payment> CreatePayment(Payment payment);
+        Task<Payment> UpdatePaymentStatus(string paymentId, bool approved, string authCode, string status);
     }
 }

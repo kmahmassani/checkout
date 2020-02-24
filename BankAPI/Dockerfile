@@ -4,11 +4,11 @@ WORKDIR /app
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 # copy csproj and restore as distinct layers
-COPY *.csproj ./
+COPY /BankAPI/*.csproj ./
 RUN dotnet restore
 
 # copy everything else and build
-COPY . ./
+COPY ./BankAPI ./
 RUN dotnet publish -c Release -o out
 
 # build runtime image

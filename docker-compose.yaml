@@ -1,0 +1,23 @@
+version: '3'
+services:
+  database:
+    build:
+      context: ./Database
+    ports:
+    - "5002:5432"
+  bank-api:
+    build:
+      context: ./BankAPI     
+    ports:
+      - "5001:80"
+  payment-api:
+    depends_on: 
+      - database
+      - bank-api
+    build:
+      context: ./PaymentGateway
+    ports:
+      - "5000:80"
+
+    
+  

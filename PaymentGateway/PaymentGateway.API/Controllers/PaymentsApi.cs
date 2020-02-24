@@ -70,7 +70,7 @@ namespace PaymentGateway.API.Controllers
         [ValidateModelState]
         [SwaggerOperation("PaymentsPost")]
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
-        [SwaggerResponse(statusCode: 422, type: typeof(ValidationError), description: "Invalid data was sent")]
+        [SwaggerResponse(statusCode: 422, description: "Invalid data was sent")]
         [Consumes("application/json")]
         [Produces("application/json")]
         public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromBody]PaymentRequest body)

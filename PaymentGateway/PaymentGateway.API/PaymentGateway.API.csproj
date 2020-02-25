@@ -33,6 +33,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Examples" Version="2.9.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

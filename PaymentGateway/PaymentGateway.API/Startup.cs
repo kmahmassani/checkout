@@ -20,6 +20,7 @@ using AutoMapper;
 using PaymentGateway.API.Mappings;
 using PaymentGateway.DataAccess.ApiClient;
 using Swashbuckle.AspNetCore.Examples;
+using PaymentGateway.API.Middleware;
 
 namespace PaymentGateway.API
 {

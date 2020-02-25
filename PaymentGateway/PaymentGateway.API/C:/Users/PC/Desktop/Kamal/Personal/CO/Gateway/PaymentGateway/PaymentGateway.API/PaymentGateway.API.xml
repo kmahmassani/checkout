@@ -24,25 +24,6 @@
             <summary>
             Request a payment
             </summary>
-            <remarks>
-            Sample Request:
-            
-                POST /payments
-                {
-                    "source": {
-                        "type": "card",
-                        "number": "4111111111111111",
-                        "expiry_month": 1,
-                        "expiry_year": 2021,
-                        "name": "Kamal",
-                        "cvv": "666"
-                    },
-                    "amount": 100,
-                    "currency": "USD",
-                    "reference": "Test"
-                }        
-               
-            </remarks>
             <param name="authorization">Your valid merchant account secret key</param>
             <param name="contentType"></param>
             <param name="body"></param>

@@ -14,7 +14,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The type of payment source. Set this to &#x60;card&#x60;.
         /// </summary>
-        /// <value>card</value>
+        /// <example>card</example>
         [Required]       
         [DataMember(Name="type")]
         public string Type { get; set; }
@@ -22,7 +22,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The card number (without separators)
         /// </summary>
-        /// <value>4111111111111111</value>
+        /// <example>4111111111111111</example>
         [Required]
         [DataMember(Name="number")]
         [CreditCard]
@@ -31,7 +31,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The expiry month of the card
         /// </summary>
-        /// <value>12</value>
+        /// <example>12</example>
         [Required]
         [DataMember(Name="expiry_month")]
         [Range(1, 12)]
@@ -40,7 +40,7 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The expiry year of the card
         /// </summary>
-        /// <value>2021</value>
+        /// <example>2021</example>
         [Required]
         [ExpiryDate]
         [DataMember(Name="expiry_year")]
@@ -49,14 +49,14 @@ namespace PaymentGateway.Domain.HttpModels
         /// <summary>
         /// The name of the cardholder
         /// </summary>
-        /// <value>John Wick</value>
+        /// <example>John Wick</example>
         [DataMember(Name="name")]
         public string Name { get; set; }
 
         /// <summary>
         /// The card verification value/code. 3 digits, except for Amex (4 digits)
         /// </summary>
-        /// <value>666</value>
+        /// <example>666</example>
         [DataMember(Name="cvv")]
         [StringLength(4, MinimumLength = 3)]
         [Required]

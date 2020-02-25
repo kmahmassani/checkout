@@ -8,6 +8,8 @@ using PaymentGateway.Domain.Interfaces;
 using System.Threading.Tasks;
 using AutoMapper;
 using PaymentGateway.Domain.POCOs;
+using Swashbuckle.AspNetCore.Examples;
+using PaymentGateway.API.Swagger;
 
 namespace PaymentGateway.API.Controllers
 {
@@ -57,7 +59,25 @@ namespace PaymentGateway.API.Controllers
         /// <summary>
         /// Request a payment
         /// </summary>
-        /// <remarks>To verify the success of the payment, check the &#x60;approved&#x60; field in the response. </remarks>
+        /// <remarks>
+        /// Sample Request:
+        /// 
+        ///     POST /payments
+        ///     {
+        ///         "source": {
+        ///             "type": "card",
+        ///             "number": "4111111111111111",
+        ///             "expiry_month": 1,
+        ///             "expiry_year": 2021,
+        ///             "name": "Kamal",
+        ///             "cvv": "666"
+        ///         },
+        ///         "amount": 100,
+        ///         "currency": "USD",
+        ///         "reference": "Test"
+        ///     }        
+        ///    
+        /// </remarks>
         /// <param name="authorization">Your valid merchant account secret key</param>
         /// <param name="contentType"></param>
         /// <param name="body"></param>
@@ -71,6 +91,8 @@ namespace PaymentGateway.API.Controllers
         [SwaggerOperation("PaymentsPost")]
         [SwaggerResponse(statusCode: 201, type: typeof(PaymentResponse), description: "Payment processed successfully")]
         [SwaggerResponse(statusCode: 422, description: "Invalid data was sent")]
+        [SwaggerRequestExample(typeof(PaymentRequest), typeof(PaymentRequestExample))]
+        [SwaggerResponseExample(201, typeof(PaymentResponseExample))]
         [Consumes("application/json")]
         [Produces("application/json")]
         public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromBody]PaymentRequest body)

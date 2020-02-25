@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentGateway.API</name>
+    </assembly>
+    <members>
+        <member name="T:PaymentGateway.API.Controllers.PaymentsApiController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsIdGet(System.String,System.String)">
+            <summary>
+            Get payment details
+            </summary>
+            <remarks>Returns the details of the payment with the specified identifier string.  If the payment method requires a redirection to a third party (e.g., 3D Secure), the redirect URL back to your site will include a &#x60;cko-session-id&#x60; query parameter containing a payment session ID that can be used to obtain the details of the payment, for example:  http://example.com/success?cko-session-id&#x3D;sid_ubfj2q76miwundwlk72vxt2i7q. </remarks>
+            <param name="authorization">Your valid merchant account secret key</param>
+            <param name="id">The payment or payment session identifier</param>
+            <response code="200">Payment retrieved successfully</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Payment not found</response>
+        </member>
+        <member name="M:PaymentGateway.API.Controllers.PaymentsApiController.PaymentsPost(System.String,PaymentGateway.Domain.HttpModels.PaymentRequest)">
+            <summary>
+            Request a payment
+            </summary>
+            <remarks>
+            Sample Request:
+            
+                POST /payments
+                {
+                    "source": {
+                        "type": "card",
+                        "number": "4111111111111111",
+                        "expiry_month": 1,
+                        "expiry_year": 2021,
+                        "name": "Kamal",
+                        "cvv": "666"
+                    },
+                    "amount": 100,
+                    "currency": "USD",
+                    "reference": "Test"
+                }        
+               
+            </remarks>
+            <param name="authorization">Your valid merchant account secret key</param>
+            <param name="contentType"></param>
+            <param name="body"></param>
+            <response code="201">Payment processed successfully</response>
+            <response code="401">Unauthorized</response>
+            <response code="422">Invalid data was sent</response>
+            <response code="502">Bad gateway</response>
+        </member>
+        <member name="M:PaymentGateway.API.Filters.BasePathFilter.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="basePath">BasePath to remove from Operations</param>
+        </member>
+        <member name="P:PaymentGateway.API.Filters.BasePathFilter.BasePath">
+            <summary>
+            Gets the BasePath of the Swagger Doc
+            </summary>
+            <returns>The BasePath of the Swagger Doc</returns>
+        </member>
+        <member name="M:PaymentGateway.API.Filters.BasePathFilter.Apply(Swashbuckle.AspNetCore.Swagger.SwaggerDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            Apply the filter
+            </summary>
+            <param name="swaggerDoc">SwaggerDocument</param>
+            <param name="context">FilterContext</param>
+        </member>
+        <member name="M:PaymentGateway.API.Filters.GeneratePathParamsValidationFilter.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="operation">Operation</param>
+            <param name="context">OperationFilterContext</param>
+        </member>
+        <member name="M:PaymentGateway.API.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="env"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:PaymentGateway.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:PaymentGateway.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+    </members>
+</doc>

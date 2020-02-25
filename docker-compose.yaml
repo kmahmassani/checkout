@@ -18,6 +18,3 @@ services:
       context: ./PaymentGateway
     ports:
       - "5000:80"
-
-    
-  

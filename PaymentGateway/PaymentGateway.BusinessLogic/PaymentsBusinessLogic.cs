@@ -5,6 +5,7 @@ using PaymentGateway.Domain.POCOs;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace PaymentGateway.BusinessLogic
 {
@@ -13,8 +14,9 @@ namespace PaymentGateway.BusinessLogic
         private readonly IPaymentsRepository _paymentsRepo;
         private readonly IBank _bankRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public PaymentsBusinessLogic(IPaymentsRepository paymentsRepo, IBank bankRepo, IMapper mapper)
+        public PaymentsBusinessLogic(IPaymentsRepository paymentsRepo, IBank bankRepo, IMapper mapper, ILogger<IPaymentsBusinessLogic> logger)
         {
             _paymentsRepo = paymentsRepo;
             _bankRepo = bankRepo;
@@ -67,6 +69,7 @@ namespace PaymentGateway.BusinessLogic
             }
             catch (HttpRequestException e)
             {
+                _logger.LogError($"Payment Failed - {e.Message}");
                 payment.Approved = false;
                 payment.Status = PaymentStatus.Failed;
                 payment = await _paymentsRepo.UpdatePaymentStatus(payment.Id, payment.Approved, payment.AuthCode, payment.Status, null);

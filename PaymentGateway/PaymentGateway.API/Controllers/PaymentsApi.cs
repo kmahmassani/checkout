@@ -10,6 +10,7 @@ using AutoMapper;
 using PaymentGateway.Domain.POCOs;
 using Swashbuckle.AspNetCore.Examples;
 using PaymentGateway.API.Swagger;
+using Microsoft.Extensions.Logging;
 
 namespace PaymentGateway.API.Controllers
 {
@@ -19,11 +20,13 @@ namespace PaymentGateway.API.Controllers
     [ApiController]
     public class PaymentsApiController : ControllerBase
     {
-        private readonly IPaymentsBusinessLogic _businessLogic;       
+        private readonly IPaymentsBusinessLogic _businessLogic;
+        private readonly ILogger _logger;
 
-        public PaymentsApiController(IPaymentsBusinessLogic businessLogic)
+        public PaymentsApiController(IPaymentsBusinessLogic businessLogic, ILogger<PaymentsApiController> logger)
         {
             _businessLogic = businessLogic;
+            _logger = logger;
         }            
 
 
@@ -42,6 +45,7 @@ namespace PaymentGateway.API.Controllers
         [ValidateModelState]
         [SwaggerOperation("PaymentsIdGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(PaymentResponse), description: "Payment retrieved successfully")]
+        [SwaggerResponseExample(200, typeof(PaymentResponseExample))]
         [Consumes("application/json")]
         [Produces("application/json")]
         public virtual async Task<IActionResult> PaymentsIdGet([FromHeader][Required()]string authorization, [FromRoute][Required][RegularExpression(@"^(pay|sid)_(\w{26})$")]string id)
@@ -59,25 +63,6 @@ namespace PaymentGateway.API.Controllers
         /// <summary>
         /// Request a payment
         /// </summary>
-        /// <remarks>
-        /// Sample Request:
-        /// 
-        ///     POST /payments
-        ///     {
-        ///         "source": {
-        ///             "type": "card",
-        ///             "number": "4111111111111111",
-        ///             "expiry_month": 1,
-        ///             "expiry_year": 2021,
-        ///             "name": "Kamal",
-        ///             "cvv": "666"
-        ///         },
-        ///         "amount": 100,
-        ///         "currency": "USD",
-        ///         "reference": "Test"
-        ///     }        
-        ///    
-        /// </remarks>
         /// <param name="authorization">Your valid merchant account secret key</param>
         /// <param name="contentType"></param>
         /// <param name="body"></param>
@@ -96,8 +81,12 @@ namespace PaymentGateway.API.Controllers
         [Consumes("application/json")]
         [Produces("application/json")]
         public virtual async Task<IActionResult> PaymentsPost([FromHeader][Required()]string authorization, [FromBody]PaymentRequest body)
-        {             
+        {
+            _logger.LogInformation($"Payment request: {body.Currency}-{body.Amount}-{body.Source.Number}");
+
             var payment = await _businessLogic.CreatePayment(body);
+
+            _logger.LogInformation($"Payment request: {body.Currency}-{body.Amount}-{body.Source.Number}==>{payment.Status}");
 
             var response = new ObjectResult(payment);
             response.StatusCode = 201;

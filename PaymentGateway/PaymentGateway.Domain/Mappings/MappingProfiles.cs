@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using PaymentGateway.API.Extensions;
+using PaymentGateway.Domain.Extensions;
 using PaymentGateway.Domain.HttpModels;
 using PaymentGateway.Domain.POCOs;
 
-namespace PaymentGateway.API.Mappings
+namespace PaymentGateway.Domain.Mappings
 {
     public class MappingProfiles : Profile
     {

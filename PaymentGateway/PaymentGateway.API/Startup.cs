@@ -17,10 +17,9 @@ using PaymentGateway.DataAccess;
 using PaymentGateway.DataAccess.Repositories;
 using PaymentGateway.BusinessLogic;
 using AutoMapper;
-using PaymentGateway.API.Mappings;
 using PaymentGateway.DataAccess.ApiClient;
 using Swashbuckle.AspNetCore.Examples;
-using PaymentGateway.API.Middleware;
+using PaymentGateway.Domain.Mappings;
 
 namespace PaymentGateway.API
 {

@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.API.Extensions
+﻿namespace PaymentGateway.Domain.Extensions
 {
     public static class StringExtension
 {

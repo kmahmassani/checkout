@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Domain", "Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.DomainTests", "PaymentGateway.DomainTests\PaymentGateway.DomainTests.csproj", "{2CAE2A01-1246-4486-94D3-D5AABC37E990}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.DataAccess", "PaymentGateway.DataAccess\PaymentGateway.DataAccess.csproj", "{29148AAB-A396-45DF-844A-96719DE5FB13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.DataAccess", "PaymentGateway.DataAccess\PaymentGateway.DataAccess.csproj", "{29148AAB-A396-45DF-844A-96719DE5FB13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.BusinessLogic", "PaymentGateway.BusinessLogic\PaymentGateway.BusinessLogic.csproj", "{2F1398E3-F0C6-41C5-A837-81258F6BDEAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.BusinessLogic", "PaymentGateway.BusinessLogic\PaymentGateway.BusinessLogic.csproj", "{2F1398E3-F0C6-41C5-A837-81258F6BDEAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.BusinessLogicTests", "PaymentGateway.BusinessLogicTests\PaymentGateway.BusinessLogicTests.csproj", "{B597BEAD-45AC-4E90-A19B-02D3B56E65E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2F1398E3-F0C6-41C5-A837-81258F6BDEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1398E3-F0C6-41C5-A837-81258F6BDEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1398E3-F0C6-41C5-A837-81258F6BDEAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B597BEAD-45AC-4E90-A19B-02D3B56E65E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B597BEAD-45AC-4E90-A19B-02D3B56E65E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B597BEAD-45AC-4E90-A19B-02D3B56E65E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B597BEAD-45AC-4E90-A19B-02D3B56E65E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
